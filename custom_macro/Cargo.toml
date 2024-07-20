@@ -1,0 +1,10 @@
+[package]
+name = "custom_macro"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+#  核心代码，声明proc-macro为true 代表当前为一个过程宏定义的包。
+[lib]
+proc-macro = true
