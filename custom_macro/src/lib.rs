@@ -1,14 +1,6 @@
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
-}
+use proc_macro::TokenStream;
+use proc_macro2::Ident;
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
-}
+// 声明为派生宏并且命名为 MyDebug
+#[proc_macro_derive(MyDebug)]
+pub fn debug(item: TokenStream) -> TokenStream {}

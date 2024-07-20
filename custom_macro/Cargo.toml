@@ -4,6 +4,9 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+proc-macro2 = "1.0"
+syn = { version = "2.0.48", features = ["full"] }
+quote = "1.0"
 
 #  核心代码，声明proc-macro为true 代表当前为一个过程宏定义的包。
 [lib]
