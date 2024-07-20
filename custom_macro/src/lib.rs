@@ -1,5 +1,7 @@
 use proc_macro::TokenStream;
 use proc_macro2::Ident;
+use quote::quote;
+use syn::DeriveInput;
 
 // 声明为派生宏并且命名为 MyDebug
 #[proc_macro_derive(MyDebug)]
@@ -7,6 +9,7 @@ pub fn debug(item: TokenStream) -> TokenStream {
     // 解析 TokenStream 流 转 ast
     let item: DeriveInput = syn::parse(item).unwrap();
     let name = &item.ident;
+    println!("name-------: {:?}", name);
 
     // 字段信息
     let mut content: Vec<Ident> = Vec::new();
@@ -25,12 +28,16 @@ pub fn debug(item: TokenStream) -> TokenStream {
         })
     }
 
+    println!("content: {:?}", content);
+
     // 去掉最后一个逗号
     // 使用quote!宏来生成新的TokenStream，其中生成过程中可以使用我们定义的所有变量。
     let prefix = quote!(
         #name format: #format_code
     )
     .to_string();
+
+    println!("prefix: {:?}", prefix);
 
     let d = quote!(
         // 使用 name 实现对结构体的实现声明
