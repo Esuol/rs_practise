@@ -1,3 +1,5 @@
+mod simple_code;
+
 fn main() {
-    println!("Hello, world!");
+    simple_code::simple_thread();
 }
