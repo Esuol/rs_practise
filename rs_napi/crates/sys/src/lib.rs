@@ -1,14 +1,9 @@
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
-}
+#![allow(non_camel_case_types)]
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+use std::os::raw::{c_char, c_int, c_uint, c_void};
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct napi_value__ {
+    _unused: [u8; 0],
 }
