@@ -1,14 +1,7 @@
+use std::ffi::CString;
+use std::ptr;
+use sys::{napi_callback_info, napi_env, napi_value};
+
 pub fn add(left: usize, right: usize) -> usize {
     left + right
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
 }
