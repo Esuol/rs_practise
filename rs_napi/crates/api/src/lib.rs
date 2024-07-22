@@ -58,3 +58,20 @@ unsafe extern "C" fn register_fn(env: napi_env, exports: napi_value) -> napi_val
     sys::napi_define_properties(env, exports, desc.len(), desc.as_ptr());
     exports
 }
+
+#[ctor::ctor]
+fn export_module() {
+    let name = CString::new("api").unwrap();
+    let mut modules = sys::napi_module {
+        nm_version: 1,
+        nm_filename: ptr::null_mut(),
+        nm_flags: 0,
+        nm_modname: name.as_ptr().cast(),
+        nm_priv: ptr::null_mut() as *mut _,
+        nm_register_func: Some(register_fn),
+        reserved: [ptr::null_mut() as *mut _; 4],
+    };
+    unsafe {
+        sys::napi_module_register(&mut modules);
+    }
+}
