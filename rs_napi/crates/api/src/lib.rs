@@ -1,6 +1,6 @@
 use std::ffi::CString;
 use std::ptr;
-use sys::{napi_callback_info, napi_env, napi_value, napi_value__};
+use sys::{napi_callback_info, napi_env, napi_value};
 
 pub fn add(left: f64, right: f64) -> f64 {
     left + right
@@ -59,6 +59,7 @@ unsafe extern "C" fn register_fn(env: napi_env, exports: napi_value) -> napi_val
     exports
 }
 
+// 这段Rust代码展示了如何使用ctor库来在Rust中定义一个在加载时自动执行的函数，以及如何使用Rust的FFI（Foreign Function Interface）功能与Node.js的N-API交互，从而注册一个原生模块
 #[ctor::ctor]
 fn export_module() {
     let name = CString::new("api").unwrap();
@@ -72,6 +73,7 @@ fn export_module() {
         reserved: [ptr::null_mut() as *mut _; 4],
     };
     unsafe {
+        // ，将modules结构体注册为一个N-API模块。这个调用是不安全的，因为它涉及到FFI调用和裸指针操作，这是Rust中潜在的不安全操作。
         sys::napi_module_register(&mut modules);
     }
 }
