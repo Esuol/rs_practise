@@ -1,14 +1,13 @@
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
+use proc_macro::TokenStream;
+use quote::quote;
+use std::ops::Deref;
+use std::sync::atomic::{AtomicBool, Ordering};
+use syn::{ItemFn, Pat::Ident, Type};
+
+struct NapiFnArgs {
+    _ident: syn::Ident,
+    ty: Type,
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
-}
+// 声明原子操作 用于确保当前为第一个宏展开
+static REGISTER_INIT: AtomicBool = AtomicBool::new(false);                          
