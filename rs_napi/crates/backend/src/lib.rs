@@ -147,6 +147,7 @@ pub fn api(_attr: TokenStream, input: TokenStream) -> TokenStream {
     //，quote! { ... }; 用于在宏中生成代码，
     // # 符号用于插入变量值。
     // 展示了如何使用quote!宏来生成包含不安全外部函数的Rust代码，
+    // 如何在Rust中定义一个与Node.js的N-API交互的外部"C"函数，包括如何接收参数、调用Rust逻辑，并将结果返回给JavaScript。这是创建Node.js本地插件的关键步骤之一，允许Rust代码高效地与JavaScript代码交互。
     let expanded = quote! {
         #init
         #org_sig
@@ -159,6 +160,7 @@ pub fn api(_attr: TokenStream, input: TokenStream) -> TokenStream {
         ) -> sys::napi_value {
             unsafe {
                 let mut args = [std::ptr::null_mut(); #arg_cnt];
+                // 调用sys::napi_get_cb_info函数来填充这个数组，这个函数从Node.js环境中获取回调信息，包括传递给函数的参数。
                 sys::napi_get_cb_info(
                     env,
                     callback,
@@ -168,12 +170,29 @@ pub fn api(_attr: TokenStream, input: TokenStream) -> TokenStream {
                     std::ptr::null_mut(),
                 );
 
+                // #(#js_args)*是一个宏替换片段，用于处理或转换JavaScript传递过来的参数。
                 #(#js_args)*
 
+                //用另一个Rust函数（或可能是同一个函数的不同部分），这个函数执行实际的逻辑处理，并返回一个结果。
                 let ret = #name(#(#run_args),*);
 
+                // 将处理结果转换为N-API可以识别的值类型，以便将结果返回给JavaScript环境。
+                // 这里#ret_ty是返回值的类型，
+                // try_into_raw方法负责将Rust类型转换为N-API的值类型。
                 <#ret_ty as crate::value::NapiValue>::try_into_raw(env,ret)
             }
         }
+
+        // 函数#init_js_fn()（这里的#init_js_fn是一个占位符，表示实际的函数名将在宏展开时被替换）的主要任务是调用crate::register::register_fn函数。这个调用传递了两个参数：#org_name_str和Some(#js_name)。这里的#org_name_str和#js_name同样是占位符，分别代表原始函数名的字符串表示和一个可能的JavaScript函数名
+
+        // crate::register::register_fn函数的作用是将一个Rust函数注册为可以从JavaScript调用的函数。这通常是在创建Node.js的本地扩展时进行的，允许JavaScript代码直接调用Rust代码。第一个参数指定了要注册的Rust函数的名称，而第二个参数Some(#js_name)提供了这个函数在JavaScript中的可选名称。如果提供了这个名称，JavaScript代码就可以通过这个名称来调用Rust函数。
+
+        // 这段代码的目的是在程序启动时自动注册一个Rust函数，使其可以被JavaScript代码调用。这是在Rust中创建Node.js本地扩展的常见步骤之一，允许开发者利用Rust的性能优势在Node.js应用中执行高效的后端逻辑。
+        #[ctor::ctor]
+        fn #init_js_fn() {
+            crate::register::register_fn(#org_name_str,Some(#js_name));
+        }
     };
+
+    expanded.into()
 }
