@@ -25,13 +25,12 @@ pub type napi_status = i32;
 pub struct napi_callback_info__ {
     _unused: [u8; 0],
 }
-
 pub type napi_callback_info = *mut napi_callback_info__;
 
 pub type napi_callback =
     Option<unsafe extern "C" fn(env: napi_env, info: napi_callback_info) -> napi_value>;
 
-pub type napi_property_attributes = u32;
+pub type napi_property_attributes = i32;
 
 pub type napi_addon_register_func =
     Option<unsafe extern "C" fn(env: napi_env, exports: napi_value) -> napi_value>;
@@ -79,5 +78,19 @@ extern "C" {
         object: napi_value,
         property_count: usize,
         properties: *const napi_property_descriptor,
+    ) -> napi_status;
+    pub fn napi_set_named_property(
+        env: napi_env,
+        object: napi_value,
+        utf8name: *const c_char,
+        value: napi_value,
+    ) -> napi_status;
+    pub fn napi_create_function(
+        env: napi_env,
+        utf8name: *const c_char,
+        length: usize,
+        cb: napi_callback,
+        data: *mut c_void,
+        result: *mut napi_value,
     ) -> napi_status;
 }
