@@ -19,8 +19,6 @@ pub fn api(_attr: TokenStream, input: TokenStream) -> TokenStream {
     // 函数名
     let name = &ast.sig.ident;
     let org_name_str = quote! {#name}.to_string();
-    println!("{name:?}", name);
-    println!("{org_name_str:?}", org_name_str);
 
     // 通过REGISTER_INIT.load(Ordering::SeqCst)检查REGISTER_INIT的值。
     // 这里使用的Ordering::SeqCst保证了这个操作在多线程环境下的内存顺序性，确保这个操作看起来是在一个单一的、全局的操作序列中执行的。
@@ -132,4 +130,17 @@ pub fn api(_attr: TokenStream, input: TokenStream) -> TokenStream {
         format!("_napi_{}", name).as_str(),
         proc_macro2::Span::call_site(),
     );
+
+    let run_args = args.iter().enumerate().map(|(index, _ident)| {
+        // 使用 format!("arg_{}", index) 来创建一个新的字符串，该字符串以 "arg_" 开头，后跟元素的索引。这个字符串用于创建一个新的 syn::Ident 实例，表示一个标识符。syn::Ident::new 函数的第一个参数是标识符的名称，第二个参数是一个 Span，在这里使用 proc_macro2::Span::call_site() 来获取调用宏的位置。
+
+        // syn::Ident::new 函数返回一个 Ident 类型的实例，这个实例可以在宏的输出中被用作变量名、函数名等标识符。
+        let arg = syn::Ident::new(
+            format!("arg_{}", index).as_str(),
+            proc_macro2::Span::call_site(),
+        );
+        quote! {
+           #arg
+        }
+    });
 }
