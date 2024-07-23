@@ -143,4 +143,37 @@ pub fn api(_attr: TokenStream, input: TokenStream) -> TokenStream {
            #arg
         }
     });
+
+    //，quote! { ... }; 用于在宏中生成代码，
+    // # 符号用于插入变量值。
+    // 展示了如何使用quote!宏来生成包含不安全外部函数的Rust代码，
+    let expanded = quote! {
+        #init
+        #org_sig
+        #org_block
+
+        // 这两个参数的类型分别是sys::napi_env和sys::napi_callback_info，这表明该函数可能是为了与Node.js的N-API交互而设计的。N-API是一个C语言接口，允许创建独立于Node.js版本的本地插件。
+        unsafe extern "C" fn #js_name(
+            env: sys::napi_env,
+            callback: sys::napi_callback_info,
+        ) -> sys::napi_value {
+            unsafe {
+                let mut args = [std::ptr::null_mut(); #arg_cnt];
+                sys::napi_get_cb_info(
+                    env,
+                    callback,
+                    &mut #arg_cnt,
+                    args.as_mut_ptr(),
+                    std::ptr::null_mut(),
+                    std::ptr::null_mut(),
+                );
+
+                #(#js_args)*
+
+                let ret = #name(#(#run_args),*);
+
+                <#ret_ty as crate::value::NapiValue>::try_into_raw(env,ret)
+            }
+        }
+    };
 }
