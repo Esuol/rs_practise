@@ -105,4 +105,31 @@ pub fn api(_attr: TokenStream, input: TokenStream) -> TokenStream {
             syn::FnArg::Receiver(ref _p) => None,
         })
         .collect::<Vec<NapiFnArgs>>();
+
+    // 生成原始函数参数的长度
+    let arg_cnt = args.len();
+
+    // 这段Rust代码是在一个宏定义中使用的，它的目的是将Rust函数的参数转换为Node.js的N-API值。
+    let js_args = args.iter().enumerate().map(|(index, &ref ident)| {
+        let arg = syn::Ident::new(
+            format!("arg_{}", index).as_str(),
+            proc_macro2::Span::call_site(),
+        );
+        let ty = &ident.ty.clone();
+        quote! {
+            let #arg = <#ty as crate::value::NapiValue>::get_value_from_raw(env,args[#index]);
+        }
+    });
+
+    // 这段代码的目的是在宏内部动态生成一个新的标识符，其名称基于输入的 name，
+    let js_name = syn::Ident::new(
+        format!("js_{}", name).as_str(),
+        proc_macro2::Span::call_site(),
+    );
+
+    // 创建一个新的标识符（syn::Ident），其名称是通过将给定的 name 前缀加上 "_napi_" 来构造的。这里使用了 format! 宏来拼接字符串 "_napi_" 和 name 的值，然后通过 .as_str() 方法将其转换为字符串切片，因为 syn::Ident::new 函数的第一个参数需要的是一个字符串切片 (&str)。
+    let init_js_fn = syn::Ident::new(
+        format!("_napi_{}", name).as_str(),
+        proc_macro2::Span::call_site(),
+    );
 }
