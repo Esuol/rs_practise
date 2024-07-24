@@ -1,0 +1,43 @@
+{
+  "name": "node_uv-wasm32-wasi",
+  "version": "1.1.1",
+  "cpu": [
+    "wasm32"
+  ],
+  "main": "node_uv.wasi.cjs",
+  "files": [
+    "node_uv.wasm32-wasi.wasm",
+    "node_uv.wasi.cjs",
+    "node_uv.wasi-browser.js",
+    "wasi-worker.mjs",
+    "wasi-worker-browser.mjs"
+  ],
+  "description": "Template project for writing node package with napi-rs",
+  "keywords": [
+    "napi-rs",
+    "NAPI",
+    "N-API",
+    "Rust",
+    "node-addon",
+    "node-addon-api"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "repository": {
+    "url": "git+ssh://git@github.com/napi-rs/package-template-pnpm.git",
+    "type": "git"
+  },
+  "browser": "node_uv.wasi-browser.js",
+  "dependencies": {
+    "@emnapi/core": "^1.2.0",
+    "@emnapi/runtime": "^1.2.0",
+    "@tybys/wasm-util": "^0.9.0",
+    "memfs-browser": "^3.5.10302"
+  }
+}

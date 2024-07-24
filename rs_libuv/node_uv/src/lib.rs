@@ -5,7 +5,6 @@ struct ComputeFib {
   n: u32,
 }
 
-
 fn fibonacci_native(n: u32) -> u32 {
   match n {
     1 | 2 => 1,
@@ -34,7 +33,7 @@ impl Task for ComputeFib {
 
 #[js_function(0)]
 pub fn native_fib(ctx: CallContext) -> Result<JsObject> {
-  let task = ComputeFib::new(50);
+  let task = ComputeFib::new(20);
   let async_promise = ctx.env.spawn(task)?;
   Ok(async_promise.promise_object())
 }

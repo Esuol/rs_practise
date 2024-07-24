@@ -5,10 +5,6 @@
   "main": "index.js",
   "types": "index.d.ts",
   "browser": "browser.js",
-  "repository": {
-    "url": "git+ssh://git@github.com/napi-rs/package-template-pnpm.git",
-    "type": "git"
-  },
   "license": "MIT",
   "keywords": [
     "napi-rs",
@@ -119,5 +115,8 @@
     "singleQuote": true,
     "arrowParens": "always"
   },
-  "packageManager": "pnpm@8.14.1"
+  "packageManager": "pnpm@8.14.1",
+  "dependencies": {
+    "@napi-rs/package-template": "^1.0.0"
+  }
 }

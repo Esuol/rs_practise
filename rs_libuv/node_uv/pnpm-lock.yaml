@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+dependencies:
+  '@napi-rs/package-template':
+    specifier: ^1.0.0
+    version: 1.0.0
+
 devDependencies:
   '@emnapi/core':
     specifier: ^0.45.0
@@ -408,6 +413,94 @@ packages:
       '@napi-rs/lzma-win32-x64-msvc': 1.2.1
     dev: true
 
+  /@napi-rs/package-template-android-arm64@1.0.0:
+    resolution: {integrity: sha512-v2fYVpO912TpkLP19AfiXga5B1zYfx1yhRrDmKk9GKsi6qQe7tmjF6PrP2g/6q9suGjOdswc3qPEnqZaYeKydg==}
+    engines: {node: '>= 10'}
+    cpu: [arm64]
+    os: [android]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@napi-rs/package-template-darwin-arm64@1.0.0:
+    resolution: {integrity: sha512-XmAPeY6245sCMeTuSPJUedzLkL/482ul+TAI0HAGiZvjqlwG0leFj2yZCzPaEW8J22ZBQuF6dLIRvtRxDESuBA==}
+    engines: {node: '>= 10'}
+    cpu: [arm64]
+    os: [darwin]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@napi-rs/package-template-darwin-x64@1.0.0:
+    resolution: {integrity: sha512-NyENrvOmkVJT1L8gKqy+eTx4QSGkaHhDRunsCT0de60LGtkv+MwT06WSC3S9urccrjcZBtbKFXttwZheXAPg4w==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
+    os: [darwin]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@napi-rs/package-template-linux-arm-gnueabihf@1.0.0:
+    resolution: {integrity: sha512-IdqBpQfL59NTdOG4rYA7sVFNoaI/mh11HYObbfbmYVKlSHsB7kEWMkom1GRl7Xv97yeef9u7eXlatEKW+xLjBA==}
+    engines: {node: '>= 10'}
+    cpu: [arm]
+    os: [linux]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@napi-rs/package-template-linux-arm64-gnu@1.0.0:
+    resolution: {integrity: sha512-6a4PDmOg8WLSMxKn+FkGB2VEmdz4Ki0+LqK6Gq0pCCl8BxChTLxOLzgnTaCQun6dvkYSGXWyl9E+MSvRTZWzvQ==}
+    engines: {node: '>= 10'}
+    cpu: [arm64]
+    os: [linux]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@napi-rs/package-template-linux-x64-gnu@1.0.0:
+    resolution: {integrity: sha512-PiK0j3aXMZLiQp5X8UYu7RKolOzENKfsZI/a2cJLK1NYtxAX2ob/VMXXOE+lIKL60lbpCsytcoxxWC+5auOo7A==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
+    os: [linux]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@napi-rs/package-template-linux-x64-musl@1.0.0:
+    resolution: {integrity: sha512-OBjT+TM+HjAXEIEOMfhA4QMElGrzaTxxuIWO02tuhXFCUscRe9GCLUIutdcfjWRqVP4XE2hpb/r8sBFxnFWhTw==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
+    os: [linux]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@napi-rs/package-template-win32-x64-msvc@1.0.0:
+    resolution: {integrity: sha512-7IcCPhLLQzO1XctN7ckI1ZylGI62ptiVAWcr+Np8T/wmQlWn9SUY2MBxc+67VhKKVuGuz8dLPonoIQuHO5u/TQ==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
+    os: [win32]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@napi-rs/package-template@1.0.0:
+    resolution: {integrity: sha512-0Pztdibtyq0UH9PxRzBZobWZ2kE2WqonolN/fDPJxUtyPrAwbLjTIzeYRSDfhyE1nInS3M4JnXznb1P+niov4g==}
+    engines: {node: '>= 10'}
+    dependencies:
+      '@node-rs/helper': 1.6.0
+    optionalDependencies:
+      '@napi-rs/package-template-android-arm64': 1.0.0
+      '@napi-rs/package-template-darwin-arm64': 1.0.0
+      '@napi-rs/package-template-darwin-x64': 1.0.0
+      '@napi-rs/package-template-linux-arm-gnueabihf': 1.0.0
+      '@napi-rs/package-template-linux-arm64-gnu': 1.0.0
+      '@napi-rs/package-template-linux-x64-gnu': 1.0.0
+      '@napi-rs/package-template-linux-x64-musl': 1.0.0
+      '@napi-rs/package-template-win32-x64-msvc': 1.0.0
+    dev: false
+
   /@napi-rs/tar-android-arm-eabi@0.1.0:
     resolution: {integrity: sha512-gY9f7HfyU8MQs/ERi2/Fc4dGRf61ZM2pme31t0FkrzTtmeIaf56LiTeTt4aP8xh/0HOVnXrB6I3taY9IsQVB8Q==}
     engines: {node: '>= 10'}
@@ -543,6 +636,16 @@ packages:
       '@napi-rs/tar-win32-ia32-msvc': 0.1.0
       '@napi-rs/tar-win32-x64-msvc': 0.1.0
     dev: true
+
+  /@napi-rs/triples@1.2.0:
+    resolution: {integrity: sha512-HAPjR3bnCsdXBsATpDIP5WCrw0JcACwhhrwIAQhiR46n+jm+a2F8kBsfseAuWtSyQ+H3Yebt2k43B5dy+04yMA==}
+    dev: false
+
+  /@node-rs/helper@1.6.0:
+    resolution: {integrity: sha512-2OTh/tokcLA1qom1zuCJm2gQzaZljCCbtX1YCrwRVd/toz7KxaDRFeLTAPwhs8m9hWgzrBn5rShRm6IaZofCPw==}
+    dependencies:
+      '@napi-rs/triples': 1.2.0
+    dev: false
 
   /@nodelib/fs.scandir@2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
