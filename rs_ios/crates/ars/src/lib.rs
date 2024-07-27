@@ -1,14 +1,15 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
-}
+use jni::objects::JObject;
+use jni::sys::jstring;
+use jni::JNIEnv;
+use std::ffi::CString;
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+#[no_mangle]
+pub unsafe extern "C" fn Java_com_example_rust_MainActivity_HelloRust<'local>(
+    env: JNIEnv<'local>,
+    _class: JObject<'local>,
+) -> jstring {
+    let s = CString::new("Hello from Rust!").unwrap();
+    let out = env.new_string(s.to_str().unwrap()).unwrap();
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
+    out.into_raw()
 }

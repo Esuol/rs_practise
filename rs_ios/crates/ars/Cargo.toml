@@ -4,3 +4,8 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+# jni 库提供了与 Java 虚拟机（JVM）进行交互的功能，使得 Rust 代码可以调用 Java 方法，反之亦然。
+jni = "0.21.1"
+
+[lib]
+crate-type = ["cdylib"]
