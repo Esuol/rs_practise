@@ -1,0 +1,12 @@
+[package]
+name = "irs"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+[lib]
+# crate-type = ["staticlib", "cdylib"] 指定了生成的库类型为 staticlib 和 cdylib。这意味着在构建项目时，Rust 编译器将生成两种类型的库文件。
+# staticlib：静态库。这种类型的库会将所有依赖项和代码打包到一个单一的静态库文件中（例如 .a 文件用于 Linux 和 macOS，.lib 文件用于 Windows）。静态库在链接时会被复制到最终的可执行文件中，因此不需要在运行时提供这些库文件。静态库通常用于嵌入式系统或需要单一可执行文件的场景。
+# cdylib：C 动态库。这种类型的库可以被其他语言（如 C、C++ 或 Java）加载和使用。生成的动态链接库（例如 .so 文件用于 Linux，.dylib 文件用于 macOS，.dll 文件用于 Windows）可以在运行时被其他应用程序加载。cdylib 类型的库通常用于需要跨语言集成的项目
+crate-type = ["staticlib", "cdylib"]
