@@ -38,6 +38,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "hos"
+version = "0.1.0"
+
+[[package]]
 name = "irs"
 version = "0.1.0"
 
